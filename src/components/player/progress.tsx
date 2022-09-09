@@ -5,9 +5,10 @@ interface ProgressProps {
     width: string,
     currentTime : string | null,
     duration : string | null,
+    audioTag : any
 }
 
-const Progress : React.FC<ProgressProps> = ({width, currentTime, duration}) => {
+const Progress : React.FC<ProgressProps> = ({width, currentTime, duration, audioTag}) => {
 
     const timeFormatter = (value : string|null) => {
         let time = Number(value)
@@ -16,13 +17,22 @@ const Progress : React.FC<ProgressProps> = ({width, currentTime, duration}) => {
         return `${minutes > 9 ? PN.convertEnToPe(minutes) : `${PN.convertEnToPe(0)}${PN.convertEnToPe(minutes)}`} : ${seconds > 9 ? PN.convertEnToPe(seconds) : `${PN.convertEnToPe(0)}${PN.convertEnToPe(seconds)}`}`
     }
 
+    const increaseTimeHandler = (e : any) => {
+        audioTag.current.currentTime = (e.clientX - e.target.offsetLeft) / e.target.offsetWidth * audioTag.current.duration
+    }
+
+    const decreaseTimeHandler = (e : any) => {
+        e.stopPropagation();
+        audioTag.current.currentTime = (e.clientX - e.target.parentElement.offsetLeft) / e.target.parentElement.offsetWidth * audioTag.current.duration
+    }
+
     return (
         <div className={"flex items-center space-x-reverse space-x-4"}>
             <span dir="ltr">
                 {timeFormatter(duration)}
             </span>
-            <div className={"flex relative w-96 h-4 bg-slate-100 items-center rounded-md transition hover:scale-y-[1.1] cursor-pointer"}>
-                <div className={`absolute left-0 top-0 ${width} h-full bg-sky-300 rounded-md`}></div>
+            <div id="1" onClick={increaseTimeHandler} className={"flex relative w-96 h-2 bg-slate-100 z-0 items-center rounded-md transition hover:scale-y-[2] cursor-pointer"}>
+                <div id="2" onClick={decreaseTimeHandler} style={{width : width}} className={`absolute left-0 top-0 z-10 h-full bg-sky-300 rounded-md`}></div>
             </div>
             <span dir="ltr">
                 {timeFormatter(currentTime)}

@@ -1,5 +1,12 @@
 
-export const Musics = [
+export interface MusicsProps {
+    name: string,
+    artist : string,
+    cover : string,
+    src : string
+}
+
+export const Musics : MusicsProps[] = [
     {
         name : "دیدی پاییزو",
         artist : "معین زد",

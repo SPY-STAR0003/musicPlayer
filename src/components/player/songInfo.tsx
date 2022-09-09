@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../hooks/redux"
 
 interface MusicProps {
     name : string,
@@ -12,6 +13,8 @@ interface SongInfoProps {
 
 const SongInfo : React.FC<SongInfoProps> = ({currentMusic}) => {
 
+    const isPlaying = useAppSelector(state => state.player.isPlaying)
+
     return (
         <>
             {
@@ -19,8 +22,9 @@ const SongInfo : React.FC<SongInfoProps> = ({currentMusic}) => {
                 ? <img className={"fixed top-0 left-0 w-full h-full blur-md brightness-50 -z-50"} src={currentMusic.cover} alt={""} />
                 : null
             }
-            <div className={`flex items-center justify-center rounded-full w-72 h-72 mb-4`}>
-                <img className="rounded-full border-2 outline outline-2 outline-offset-2 outline-gray-300 transition hover:scale-105" src={currentMusic.cover} alt={currentMusic.name} />
+            <div className={`relative group flex items-center justify-center rounded-full w-72 h-72 mb-4`}>
+                <div className={`${isPlaying && "animate-ping"} absolute border-2 w-full h-full rounded-full`}></div>
+                <img className={`group-hover:scale-125 z-10 rounded-full border-2 transition`} src={currentMusic.cover} alt={currentMusic.name} />
             </div>
             <div className={"font-semibold text-xl mt-2"}>
                 <p> {currentMusic.name} </p>

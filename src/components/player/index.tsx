@@ -17,23 +17,24 @@ const Player : React.FC = () => {
     const [currentMusic, setCurrentMusic] = useState(Musics[0]);
     const [musicTime, setMusicTime] = useState({
         duration : null,
-        currentTime : null
+        currentTime : null,
     })
+    const [progressBarWidth, setProgressBarWidth] = useState<string>("")
 
     const timeUpdateHandler = (e : any) => {
-        console.log(e)
         let duration = e.target.duration
         let currentTime = e.target.currentTime
         setMusicTime({...musicTime, duration, currentTime})
+        setProgressBarWidth(`${currentTime/duration * 100}%`)
     }
 
     return (
         <div className={"grid-col-9 relative text-white flex flex-col items-center"}>
             <Header text="پخش کننده موسیقی" />
             <SongInfo currentMusic={currentMusic}  />
-            <Progress width="w-1/3" duration={musicTime.duration} currentTime={musicTime.currentTime} />
+            <Progress width={progressBarWidth} duration={musicTime.duration} currentTime={musicTime.currentTime} audioTag={playBtn} />
             <PlayerBtns currentMusic={currentMusic} audioTag={playBtn}/>
-            <audio onTimeUpdate={timeUpdateHandler} ref={playBtn} src={currentMusic.src} >
+            <audio onLoadedMetadata={timeUpdateHandler} onTimeUpdate={timeUpdateHandler} ref={playBtn} src={currentMusic.src} >
                 
             </audio>
         </div>
