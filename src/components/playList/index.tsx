@@ -14,7 +14,7 @@ const PlayList : React.FC = () => {
     return (
         <>
             {
-                showPlayList && <PlayListItems />
+                showPlayList && <PlayListItems setShowPlayList={setShowPlayList} showPlayList={showPlayList} />
             }
             <ShowPlayListBtn setShowPlayList={setShowPlayList} showPlayList={showPlayList} />
         </>

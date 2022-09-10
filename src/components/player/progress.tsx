@@ -32,7 +32,7 @@ const Progress : React.FC<ProgressProps> = ({width, currentTime, duration, audio
             <span dir="ltr">
                 {timeFormatter(duration)}
             </span>
-            <div id="1" onClick={increaseTimeHandler} className={"flex relative w-96 h-2 bg-slate-100 z-0 items-center rounded-md transition hover:scale-y-[2] cursor-pointer"}>
+            <div id="1" onClick={increaseTimeHandler} className={"flex relative sm:w-96 w-60 h-2 bg-slate-100 z-0 items-center rounded-md transition hover:scale-y-[2] cursor-pointer"}>
                 <div id="2" onClick={decreaseTimeHandler} style={{width : width}} className={`absolute left-0 top-0 z-10 h-full bg-stone-600 rounded-md`}></div>
             </div>
             <span dir="ltr">
