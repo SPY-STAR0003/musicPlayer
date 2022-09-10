@@ -7,19 +7,21 @@ import SongInfo from "./songInfo";
 
 // assets
 import { Musics } from "../../assets/musics";
-import { useState, useRef, EventHandler } from "react";
+import { useState, useRef } from "react";
+import { useAppSelector } from "../../hooks/redux";
 
 
 const Player : React.FC = () => {
 
     const playBtn = useRef<HTMLAudioElement>(null);
     const [musics, setMusics] = useState(Musics);
-    const [currentMusic, setCurrentMusic] = useState(Musics[0]);
     const [musicTime, setMusicTime] = useState({
         duration : null,
         currentTime : null,
     })
     const [progressBarWidth, setProgressBarWidth] = useState<string>("")
+
+    const currentMusic = useAppSelector(state => state.player.currentMusic)
 
     const timeUpdateHandler = (e : any) => {
         let duration = e.target.duration
@@ -31,9 +33,9 @@ const Player : React.FC = () => {
     return (
         <div className={"grid-col-9 relative text-white flex flex-col items-center"}>
             <Header text="پخش کننده موسیقی" />
-            <SongInfo currentMusic={currentMusic}  />
+            <SongInfo />
             <Progress width={progressBarWidth} duration={musicTime.duration} currentTime={musicTime.currentTime} audioTag={playBtn} />
-            <PlayerBtns currentMusic={currentMusic} audioTag={playBtn}/>
+            <PlayerBtns audioTag={playBtn}/>
             <audio onLoadedMetadata={timeUpdateHandler} onTimeUpdate={timeUpdateHandler} ref={playBtn} src={currentMusic.src} >
                 
             </audio>

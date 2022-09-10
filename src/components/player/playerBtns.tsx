@@ -3,29 +3,28 @@
 import { LeftChevron, RightChevron } from "../../assets/icons/reactIconly";
 
 // react
-import {RefObject, useRef} from "react";
+import { RefObject } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setIsPlaying } from "../../store/slices/player";
 import { PauseSvg } from "../../assets/icons/icon";
 
 interface PlayerBtnsProps {
     audioTag : RefObject<HTMLAudioElement>,
-    currentMusic : any
 }
 
-const PlayerBtns : React.FC<PlayerBtnsProps> = ({audioTag, currentMusic}) => {
+const PlayerBtns : React.FC<PlayerBtnsProps> = ({audioTag}) => {
 
 
-    const isPlaying = useAppSelector(state => state.player.isPlaying)
+    const {isPlaying, currentMusic} = useAppSelector(state => state.player)
     const dispatch = useAppDispatch()
 
     const startMusic = () => {
         if (isPlaying) {
             audioTag.current?.pause();
-            dispatch(setIsPlaying())
+            dispatch(setIsPlaying());
         } else {
             audioTag.current?.play();
-            dispatch(setIsPlaying())
+            dispatch(setIsPlaying());
         }
     }
 

@@ -1,19 +1,8 @@
 import { useAppSelector } from "../../hooks/redux"
 
-interface MusicProps {
-    name : string,
-    src: string,
-    artist : string,
-    cover : string
-}
+const SongInfo : React.FC = () => {
 
-interface SongInfoProps {
-    currentMusic : MusicProps
-}
-
-const SongInfo : React.FC<SongInfoProps> = ({currentMusic}) => {
-
-    const isPlaying = useAppSelector(state => state.player.isPlaying)
+    const {isPlaying, currentMusic} = useAppSelector(state => state.player)
 
     return (
         <>
